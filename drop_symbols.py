@@ -1,5 +1,7 @@
 import re
 import os
+import shutil
+
 
 def replace_items_symbol(text: str) -> str:
     regex = re.compile(r'^.*([(|（].[)|）]).*$')
@@ -27,8 +29,9 @@ def list_files() -> list:
     return paths
 
 def set_output_path(output_path: str):
-    if not os.path.exists(output_path):
-        os.makedirs(output_path)
+    if os.path.exists(output_path):
+        shutil.rmtree(output_path, ignore_errors=True)
+    os.makedirs(output_path)
 
 def exectue_drop(root: str, destination: str):
     text = get_xml_text(root)
